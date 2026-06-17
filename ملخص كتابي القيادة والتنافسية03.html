@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HBR Handbook × Diary of a CEO</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            min-height: 100vh;
+            background: radial-gradient(circle at 10% 30%, #0b1120, #1a1a3a, #0a0817);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 1rem;
+            color: #f1f5f9;
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 1350px;
+            width: 100%;
+        }
+
+        /* ===== الهيدر ===== */
+        .header-glass {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 3rem;
+            padding: 2rem 2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.8);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-glass::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            left: -30%;
+            width: 160%;
+            height: 160%;
+            background: conic-gradient(from 90deg at 50% 50%, transparent, rgba(99, 102, 241, 0.08), transparent, rgba(251, 191, 36, 0.08), transparent);
+            animation: spinGlow 25s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes spinGlow {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .header-glass h1 {
+            position: relative;
+            font-size: 2.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #e0e7ff, #fcd34d, #fbbf24);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -1px;
+        }
+
+        .header-glass p {
+            position: relative;
+            color: #94a3b8;
+            font-weight: 300;
+            margin-top: 0.3rem;
+            font-size: 1.1rem;
+        }
+
+        /* ===== بطاقات الهبوط ===== */
+        .hero-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 3.5rem;
+        }
+
+        .hero-card {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 2.5rem;
+            padding: 2rem 2rem 2.5rem;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-card:hover {
+            transform: translateY(-12px);
+            border-color: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 35px 60px -20px rgba(0, 0, 0, 0.9);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .hero-card.hbr-card {
+            border-top: 4px solid #818cf8;
+        }
+        .hero-card.diary-card {
+            border-top: 4px solid #fbbf24;
+        }
+
+        /* ===== تصميم الغلاف بالصورة ===== */
+        .book-cover {
+            width: 100%;
+            max-width: 210px;
+            aspect-ratio: 2 / 3;
+            border-radius: 1.2rem;
+            background: linear-gradient(145deg, #1e293b, #0f172a);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.8), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+            margin-bottom: 1.8rem;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: 0.3s;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .hero-card:hover .book-cover {
+            transform: scale(1.03);
+            box-shadow: 0 25px 50px -8px rgba(0, 0, 0, 0.9);
+        }
+
+        .book-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+            background: #0f172a;
+            border-radius: 1.2rem;
+        }
+
+        .book-cover .fallback-text {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(145deg, #1e2a4a, #0f1a2e);
+            border-radius: 1.2rem;
+            padding: 1rem;
+            color: #f1f5f9;
+            text-align: center;
+        }
+
+        .book-cover img:not([src]),
+        .book-cover img[src=""] {
+            display: none;
+        }
+
+        .book-cover img:not([src])+.fallback-text,
+        .book-cover img[src=""]+.fallback-text {
+            display: flex;
+        }
+
+        .book-cover .fallback-text .title-main {
+            font-size: 1.6rem;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+        .book-cover .fallback-text .sub-title {
+            font-size: 0.7rem;
+            color: #94a3b8;
+        }
+        .cover-hbr-fallback .title-main {
+            color: #a5b4fc;
+        }
+        .cover-diary-fallback .title-main {
+            color: #fcd34d;
+        }
+
+        .hero-card .card-label {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-top: 0.2rem;
+        }
+
+        .hero-card .card-desc {
+            color: #94a3b8;
+            font-weight: 300;
+            font-size: 0.95rem;
+            max-width: 280px;
+        }
+
+        .click-hint {
+            margin-top: 1rem;
+            font-size: 0.75rem;
+            color: #64748b;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            border: 1px dashed rgba(255, 255, 255, 0.1);
+            transition: 0.3s;
+        }
+
+        .hero-card:hover .click-hint {
+            color: #cbd5e1;
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* ===== زر المقارنة ===== */
+        .compare-section {
+            text-align: center;
+            margin: 2rem 0 3rem;
+        }
+
+        .btn-compare {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 1rem 3.5rem;
+            border-radius: 80px;
+            color: #f1f5f9;
+            font-size: 1.4rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.4s;
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .btn-compare:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: #fbbf24;
+            transform: scale(1.03);
+            box-shadow: 0 0 40px rgba(251, 191, 36, 0.1);
+        }
+
+        /* ===== المودال ===== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        .modal-content {
+            background: rgba(20, 25, 45, 0.95);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 2.5rem;
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 2.5rem 2.5rem;
+            position: relative;
+            box-shadow: 0 50px 100px -20px rgba(0, 0, 0, 0.9);
+            animation: slideUp 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        @keyframes slideUp {
+            0% { transform: translateY(40px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.2rem;
+            left: 1.5rem;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #94a3b8;
+            background: rgba(255, 255, 255, 0.05);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: 0.3s;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            transform: rotate(90deg);
+        }
+
+        .modal-content .modal-icon {
+            font-size: 3rem;
+            margin-bottom: 0.3rem;
+        }
+        .modal-content h2 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 0.2rem;
+        }
+        .modal-content .modal-sub {
+            color: #94a3b8;
+            font-weight: 300;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            padding-bottom: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+        .modal-content .detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem 2rem;
+        }
+        @media (max-width: 600px) {
+            .modal-content .detail-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .modal-content .detail-item {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 1.2rem;
+            padding: 1rem 1.2rem;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+        .modal-content .detail-item h4 {
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 0.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .modal-content .detail-item.hbr-item h4 {
+            color: #818cf8;
+        }
+        .modal-content .detail-item.diary-item h4 {
+            color: #fbbf24;
+        }
+        .modal-content .detail-item p {
+            font-size: 0.95rem;
+            color: #e2e8f0;
+            font-weight: 300;
+            line-height: 1.6;
+        }
+        .modal-content .detail-item ul {
+            list-style: none;
+            padding: 0;
+            margin: 0.5rem 0 0;
+        }
+        .modal-content .detail-item ul li {
+            padding: 0.2rem 0;
+            padding-right: 1.2rem;
+            position: relative;
+            font-size: 0.9rem;
+            color: #cbd5e1;
+            font-weight: 300;
+        }
+        .modal-content .detail-item ul li::before {
+            content: "✦";
+            position: absolute;
+            right: 0;
+            color: #fbbf24;
+            font-size: 0.6rem;
+            top: 0.4rem;
+        }
+        .modal-content .detail-item.hbr-item ul li::before {
+            color: #818cf8;
+        }
+
+        /* القائمة الكاملة للمهارات والقوانين */
+        .full-list-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 0.5rem 1.5rem;
+            margin-top: 0.5rem;
+        }
+        @media (max-width: 768px) {
+            .full-list-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        @media (max-width: 480px) {
+            .full-list-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .full-list-grid .list-num {
+            font-weight: 700;
+            color: #818cf8;
+            margin-left: 0.3rem;
+        }
+        .diary-item .full-list-grid .list-num {
+            color: #fbbf24;
+        }
+        .full-list-grid .list-text {
+            color: #e2e8f0;
+            font-weight: 300;
+            font-size: 0.9rem;
+        }
+        .full-list-grid .list-item {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            padding: 0.3rem 0;
+        }
+        .section-divider {
+            grid-column: 1 / -1;
+            font-weight: 700;
+            color: #fcd34d;
+            border-bottom: 1px solid rgba(251, 191, 36, 0.2);
+            padding: 0.5rem 0 0.2rem;
+            margin-top: 0.3rem;
+            font-size: 0.95rem;
+        }
+        .hbr-item .section-divider {
+            color: #a5b4fc;
+            border-bottom-color: rgba(129, 140, 248, 0.2);
+        }
+
+        /* ===== المقارنة ===== */
+        .compare-wrapper {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 2.5rem;
+            padding: 2rem 2rem;
+            margin-top: 2rem;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .compare-wrapper.active {
+            display: block;
+        }
+
+        .compare-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-bottom: 2rem;
+        }
+
+        .compare-tab {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 0.6rem 1.6rem;
+            border-radius: 60px;
+            color: #94a3b8;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 0.95rem;
+        }
+
+        .compare-tab:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: #f1f5f9;
+        }
+
+        .compare-tab.active-tab {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #fbbf24;
+            color: #fcd34d;
+            box-shadow: 0 0 20px rgba(251, 191, 36, 0.05);
+        }
+
+        .compare-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        @media (max-width: 768px) {
+            .compare-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .compare-col {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .compare-col.hbr-col {
+            border-right: 3px solid #818cf8;
+        }
+        .compare-col.diary-col {
+            border-right: 3px solid #fbbf24;
+        }
+
+        .compare-col h4 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .compare-col .comp-content {
+            font-weight: 300;
+            color: #cbd5e1;
+            line-height: 1.9;
+        }
+        .compare-col .comp-content strong {
+            color: #f1f5f9;
+            font-weight: 700;
+        }
+        .compare-col .comp-content ul {
+            list-style: none;
+            padding: 0;
+            margin: 0.5rem 0 0.5rem 0;
+        }
+        .compare-col .comp-content ul li {
+            padding: 0.3rem 0;
+            padding-right: 1.2rem;
+            position: relative;
+            font-size: 0.95rem;
+        }
+        .compare-col .comp-content ul li::before {
+            content: "▸";
+            position: absolute;
+            right: 0;
+            color: #94a3b8;
+        }
+        .hbr-col .comp-content ul li::before {
+            color: #818cf8;
+        }
+        .diary-col .comp-content ul li::before {
+            color: #fbbf24;
+        }
+
+        .compare-col .comp-content .unique-badge {
+            display: inline-block;
+            background: rgba(251, 191, 36, 0.15);
+            color: #fcd34d;
+            padding: 0.1rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-top: 0.5rem;
+            border: 1px solid rgba(251, 191, 36, 0.2);
+        }
+        .hbr-col .comp-content .unique-badge {
+            background: rgba(129, 140, 248, 0.15);
+            color: #a5b4fc;
+            border-color: rgba(129, 140, 248, 0.2);
+        }
+
+        /* قوائم المقارنة الكاملة (تبويب القوائم) */
+        .compare-col .comp-content .list-grid-compare {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.2rem;
+        }
+        .compare-col .comp-content .list-grid-compare .item {
+            padding: 0.2rem 0;
+            padding-right: 1.2rem;
+            position: relative;
+            font-size: 0.85rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        }
+        .compare-col .comp-content .list-grid-compare .item::before {
+            content: "•";
+            position: absolute;
+            right: 0;
+            color: #94a3b8;
+        }
+        .hbr-col .comp-content .list-grid-compare .item::before {
+            color: #818cf8;
+        }
+        .diary-col .comp-content .list-grid-compare .item::before {
+            color: #fbbf24;
+        }
+        .compare-col .comp-content .list-grid-compare .sub-head {
+            font-weight: 700;
+            color: #f1f5f9;
+            margin-top: 0.3rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .close-compare {
+            margin-top: 2rem;
+            text-align: center;
+        }
+        .close-compare button {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0.6rem 2rem;
+            border-radius: 60px;
+            color: #94a3b8;
+            cursor: pointer;
+            font-family: 'Tajawal', sans-serif;
+            transition: 0.3s;
+        }
+        .close-compare button:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+
+        .modal-content::-webkit-scrollbar {
+            width: 6px;
+        }
+        .modal-content::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .modal-content::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+
+        .footer-text {
+            text-align: center;
+            margin-top: 3rem;
+            color: #475569;
+            font-weight: 300;
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+            padding-top: 2rem;
+        }
+        .highlight-hbr {
+            color: #818cf8;
+        }
+        .highlight-diary {
+            color: #fbbf24;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <!-- ===== الهيدر ===== -->
+        <header class="header-glass">
+            <h1>📖 الدليلان القياديان الأكثر تأثيرًا</h1>
+            <p>صفحة هبوط تفاعلية · بطاقات زجاجية بأغلفة حقيقية · 17 مهارة × 33 قانونًا</p>
+        </header>
+
+        <!-- ===== بطاقات الهبوط ===== -->
+        <div class="hero-cards">
+            <!-- بطاقة HBR -->
+            <div class="hero-card hbr-card" onclick="openModal('hbr')">
+                <div class="book-cover">
+                    <img src="https://images-na.ssl-images-amazon.com/images/I/81jptF4jX1L._SL1500_.jpg" 
+                         alt="غلاف HBR Manager's Handbook"
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                    <div class="fallback-text cover-hbr-fallback">
+                        <div class="title-main">Manager's<br>Handbook</div>
+                        <div class="sub-title">Harvard Business Review</div>
+                    </div>
+                </div>
+                <div class="card-label" style="color:#a5b4fc;">HBR Manager's Handbook</div>
+                <div class="card-desc">المرجع المنهجي الشامل · 17 مهارة قيادية</div>
+                <div class="click-hint">👆 اضغط لاستعراض الكتاب</div>
+            </div>
+
+            <!-- بطاقة Diary -->
+            <div class="hero-card diary-card" onclick="openModal('diary')">
+                <div class="book-cover">
+                    <img src="https://images-na.ssl-images-amazon.com/images/I/91cYQeC7sVL._SL1500_.jpg" 
+                         alt="غلاف The Diary of a CEO"
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                    <div class="fallback-text cover-diary-fallback">
+                        <div class="title-main">The Diary<br>of a CEO</div>
+                        <div class="sub-title">Steven Bartlett</div>
+                    </div>
+                </div>
+                <div class="card-label" style="color:#fcd34d;">The Diary of a CEO</div>
+                <div class="card-desc">فلسفة النجاح · 33 قانونًا للأعمال والحياة</div>
+                <div class="click-hint">👆 اضغط لاستعراض الكتاب</div>
+            </div>
+        </div>
+
+        <!-- ===== زر المقارنة ===== -->
+        <div class="compare-section">
+            <button class="btn-compare" onclick="toggleCompare()">
+                <span class="icon">⚡</span> عقد مقارنة تفاعلية بين الكتابين
+            </button>
+        </div>
+
+        <!-- ===== قسم المقارنة التفاعلي ===== -->
+        <div class="compare-wrapper" id="compareWrapper">
+            <h3 style="text-align:center; font-size:1.8rem; font-weight:700; margin-bottom:0.5rem; background: linear-gradient(135deg, #a5b4fc, #fcd34d); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">🔍 مقارنة المحاور الموسعة</h3>
+            <p style="text-align:center; color:#94a3b8; margin-bottom:1.5rem;">اختر محورًا للمقارنة التحليلية، أو اختر "📋 القوائم الكاملة" لاستعراض الـ17 مهارة والـ33 قانونًا</p>
+
+            <div class="compare-tabs" id="compareTabs">
+                <button class="compare-tab active-tab" data-topic="leadership">👤 القيادة</button>
+                <button class="compare-tab" data-topic="self">🧘 إدارة الذات</button>
+                <button class="compare-tab" data-topic="team">🤝 بناء الفريق</button>
+                <button class="compare-tab" data-topic="strategy">📈 الاستراتيجية</button>
+                <button class="compare-tab" data-topic="failure">🌀 التعامل مع الفشل</button>
+                <button class="compare-tab" data-topic="full_lists">📋 القوائم الكاملة</button>
+            </div>
+
+            <div class="compare-grid" id="compareGrid">
+                <div class="compare-col hbr-col">
+                    <h4 style="color:#a5b4fc;">📘 HBR Manager's Handbook</h4>
+                    <div class="comp-content" id="hbrContent"></div>
+                </div>
+                <div class="compare-col diary-col">
+                    <h4 style="color:#fcd34d;">📕 The Diary of a CEO</h4>
+                    <div class="comp-content" id="diaryContent"></div>
+                </div>
+            </div>
+            <div class="close-compare">
+                <button onclick="toggleCompare()">✕ إغلاق المقارنة</button>
+            </div>
+        </div>
+
+        <div class="footer-text">
+            <span class="highlight-hbr">HBR Manager's Handbook</span> · <span class="highlight-diary">The Diary of a CEO</span> — 17 مهارة × 33 قانونًا في تصميم زجاجي فاخر
+        </div>
+    </div>
+
+    <!-- ===== المودال 1: HBR (مع الـ17 مهارة) ===== -->
+    <div class="modal-overlay" id="modalHbr">
+        <div class="modal-content">
+            <div class="modal-close" onclick="closeModal('modalHbr')">✕</div>
+            <div class="modal-icon">🏛️</div>
+            <h2 style="color:#a5b4fc;">HBR Manager's Handbook</h2>
+            <div class="modal-sub">المرجع العملي للمديرين · 17 مهارة قيادية</div>
+            <div class="detail-grid">
+                <div class="detail-item hbr-item"><h4>🎯 الهدف الأساسي</h4><p>تحويل المدير إلى قائد عبر منهجية خطوة بخطوة، وتزويده بالأدوات التنفيذية لإدارة الفرق والميزانيات والاستراتيجيات.</p></div>
+                <div class="detail-item hbr-item"><h4>📚 أبرز المحاور</h4><ul><li>تطوير عقلية القائد والذكاء العاطفي</li><li>إدارة الذات والإنتاجية الشخصية</li><li>التفويض وتقديم الملاحظات الفعالة</li><li>إدارة الفرق وحل النزاعات</li><li>أساسيات الاستراتيجية والأدوات المالية</li></ul></div>
+                <div class="detail-item hbr-item" style="grid-column: 1 / -1;">
+                    <h4>📋 قائمة المهارات السبع عشرة كاملة</h4>
+                    <div class="full-list-grid">
+                        <div class="list-item"><span class="list-num">1.</span><span class="list-text">الانتقال إلى القيادة (The Transition to Leadership)</span></div>
+                        <div class="list-item"><span class="list-num">2.</span><span class="list-text">بناء الثقة والمصداقية (Building Trust and Credibility)</span></div>
+                        <div class="list-item"><span class="list-num">3.</span><span class="list-text">تطوير الذكاء العاطفي (Developing Emotional Intelligence)</span></div>
+                        <div class="list-item"><span class="list-num">4.</span><span class="list-text">تحديد موقع النجاح (Positioning Yourself for Success)</span></div>
+                        <div class="list-item"><span class="list-num">5.</span><span class="list-text">أن تصبح شخصًا مؤثرًا (Becoming a Person of Influence)</span></div>
+                        <div class="list-item"><span class="list-num">6.</span><span class="list-text">التواصل الفعال (Communicating Effectively)</span></div>
+                        <div class="list-item"><span class="list-num">7.</span><span class="list-text">الإنتاجية الشخصية (Personal Productivity)</span></div>
+                        <div class="list-item"><span class="list-num">8.</span><span class="list-text">التطوير الذاتي (Self-Development)</span></div>
+                        <div class="list-item"><span class="list-num">9.</span><span class="list-text">التفويض بثقة (Delegating with Confidence)</span></div>
+                        <div class="list-item"><span class="list-num">10.</span><span class="list-text">تقديم ملاحظات فعّالة (Giving Effective Feedback)</span></div>
+                        <div class="list-item"><span class="list-num">11.</span><span class="list-text">تطوير المواهب (Developing Talent)</span></div>
+                        <div class="list-item"><span class="list-num">12.</span><span class="list-text">قيادة الفرق (Leading Teams)</span></div>
+                        <div class="list-item"><span class="list-num">13.</span><span class="list-text">تعزيز الإبداع (Fostering Creativity)</span></div>
+                        <div class="list-item"><span class="list-num">14.</span><span class="list-text">توظيف أفضل المواهب والاحتفاظ بها (Hiring - and Keeping - the Best)</span></div>
+                        <div class="list-item"><span class="list-num">15.</span><span class="list-text">مقدمة في الاستراتيجية (Strategy: A Primer)</span></div>
+                        <div class="list-item"><span class="list-num">16.</span><span class="list-text">إتقان الأدوات المالية (Mastering Financial Tools)</span></div>
+                        <div class="list-item"><span class="list-num">17.</span><span class="list-text">تطوير خطة عمل (Developing a Business Case)</span></div>
+                    </div>
+                </div>
+                <div class="detail-item hbr-item"><h4>✨ ما يميزه</h4><ul><li>يعتمد على أبحاث هارفارد وخبراء مثل دانيال جولمان</li><li>خطوات عملية جاهزة للتطبيق الفوري</li><li>تمارين وتقييم ذاتي في كل فصل</li><li>مرجع سريع يمكن الرجوع إليه يوميًا</li></ul></div>
+                <div class="detail-item hbr-item"><h4>🧩 الموضوعات الهامة</h4><ul><li>بناء الثقة والمصداقية</li><li>قراءة القوائم المالية والميزانيات</li><li>تطوير خطة عمل (Business Case)</li><li>إدارة الاجتماعات والعروض التقديمية</li><li>تطوير المواهب عالية الإمكانات</li></ul></div>
+            </div>
+            <p style="text-align:center; margin-top:1.5rem; color:#64748b; font-size:0.9rem;">📌 الكتاب الأكثر مبيعًا في فئة الإدارة من هارفارد بزنس ريفيو</p>
+        </div>
+    </div>
+
+    <!-- ===== المودال 2: Diary (مع الـ33 قانونًا) ===== -->
+    <div class="modal-overlay" id="modalDiary">
+        <div class="modal-content">
+            <div class="modal-close" onclick="closeModal('modalDiary')">✕</div>
+            <div class="modal-icon">✧</div>
+            <h2 style="color:#fcd34d;">The Diary of a CEO</h2>
+            <div class="modal-sub">فلسفة النجاح · 33 قانونًا للأعمال والحياة</div>
+            <div class="detail-grid">
+                <div class="detail-item diary-item"><h4>🎯 الهدف الأساسي</h4><p>إتقان قوانين النجاح الدائمة والمستخلصة من علم النفس والعلوم السلوكية، لتطبيقها في الحياة والريادة بعيدًا عن الاستراتيجيات المتغيرة.</p></div>
+                <div class="detail-item diary-item" style="grid-column: 1 / -1;">
+                    <h4>📋 قائمة الـ 33 قانونًا كاملة (مقسمة حسب الأقسام)</h4>
+                    <div class="full-list-grid">
+                        <div class="section-divider">🧘 القسم الأول: الذات (القوانين 1-9)</div>
+                        <div class="list-item"><span class="list-num">1.</span><span class="list-text">املأ دلاءك الخمسة بالترتيب الصحيح</span></div>
+                        <div class="list-item"><span class="list-num">2.</span><span class="list-text">لتتقن مهارة، أوجد التزامًا بتعليمها</span></div>
+                        <div class="list-item"><span class="list-num">3.</span><span class="list-text">اسأل، لا تخبر (لإجبارهم على التفكير)</span></div>
+                        <div class="list-item"><span class="list-num">4.</span><span class="list-text">لا تتنازل أبدًا عن قصتك الذاتية</span></div>
+                        <div class="list-item"><span class="list-num">5.</span><span class="list-text">لا تحارب أبدًا عادة سيئة، بل استبدلها</span></div>
+                        <div class="list-item"><span class="list-num">6.</span><span class="list-text">الالتزام العام يولد العبقرية</span></div>
+                        <div class="list-item"><span class="list-num">7.</span><span class="list-text">السؤال يفرض التزامًا لا مفر منه</span></div>
+                        <div class="list-item"><span class="list-num">8.</span><span class="list-text">لكل فعل رد فعل معاكس في العادات</span></div>
+                        <div class="list-item"><span class="list-num">9.</span><span class="list-text">ابحث عن الصوت الذي يغير مسارك</span></div>
+
+                        <div class="section-divider">📖 القسم الثاني: القصة (القوانين 10-18)</div>
+                        <div class="list-item"><span class="list-num">10.</span><span class="list-text">السخيف وغير المفيد سيعرّفانك أكثر من العملي والمفيد</span></div>
+                        <div class="list-item"><span class="list-num">11.</span><span class="list-text">تجنب "ورق الحائط" بأي ثمن</span></div>
+                        <div class="list-item"><span class="list-num">12.</span><span class="list-text">وازن بين المألوف والجديد لإثارة الاهتمام</span></div>
+                        <div class="list-item"><span class="list-num">13.</span><span class="list-text">السرد القصصي هو السلاح الأقوى</span></div>
+                        <div class="list-item"><span class="list-num">14.</span><span class="list-text">اجعل الجمهور بطل القصة</span></div>
+                        <div class="list-item"><span class="list-num">15.</span><span class="list-text">الصدق والضعف يبنيان الجسور</span></div>
+                        <div class="list-item"><span class="list-num">16.</span><span class="list-text">التكرار يبني التذكر</span></div>
+                        <div class="list-item"><span class="list-num">17.</span><span class="list-text">الاختلاف هو ما يبقى في العقول</span></div>
+                        <div class="list-item"><span class="list-num">18.</span><span class="list-text">كل علامة تجارية تحتاج إلى "لمسة جنون"</span></div>
+
+                        <div class="section-divider">🧠 القسم الثالث: الفلسفة (القوانين 19-27)</div>
+                        <div class="list-item"><span class="list-num">19.</span><span class="list-text">الخوف قرار وليس رد فعل</span></div>
+                        <div class="list-item"><span class="list-num">20.</span><span class="list-text">خطأ صغير اليوم يصبح كارثة غدًا (الانحراف بدرجة واحدة)</span></div>
+                        <div class="list-item"><span class="list-num">21.</span><span class="list-text">كايزن العكسي: الإهمال الصغير يتراكم</span></div>
+                        <div class="list-item"><span class="list-num">22.</span><span class="list-text">النجاح ليس خطيًا بل حلزوني</span></div>
+                        <div class="list-item"><span class="list-num">23.</span><span class="list-text">المعاناة جزء من الترقية</span></div>
+                        <div class="list-item"><span class="list-num">24.</span><span class="list-text">المنطق يخسر أمام العاطفة دائمًا</span></div>
+                        <div class="list-item"><span class="list-num">25.</span><span class="list-text">التوقع هو أصل خيبة الأمل</span></div>
+                        <div class="list-item"><span class="list-num">26.</span><span class="list-text">المرونة تُبنى بالفشل لا بالنجاح</span></div>
+                        <div class="list-item"><span class="list-num">27.</span><span class="list-text">الحظ هو التقاء التحضير بالفرصة</span></div>
+
+                        <div class="section-divider">🤝 القسم الرابع: الفريق (القوانين 28-33)</div>
+                        <div class="list-item"><span class="list-num">28.</span><span class="list-text">ثقافة الفريق هي الأساس وليس المنتج</span></div>
+                        <div class="list-item"><span class="list-num">29.</span><span class="list-text">وظف المتمردين لا المطيعين</span></div>
+                        <div class="list-item"><span class="list-num">30.</span><span class="list-text">الفصل ليس فشلًا بل حماية للثقافة</span></div>
+                        <div class="list-item"><span class="list-num">31.</span><span class="list-text">الترقية يجب أن تعكس القيم وليس الأقدمية</span></div>
+                        <div class="list-item"><span class="list-num">32.</span><span class="list-text">ابنِ بيئة من الانتماء والهدف المشترك</span></div>
+                        <div class="list-item"><span class="list-num">33.</span><span class="list-text">القائد العظيم هو خادم الفريق أولاً</span></div>
+                    </div>
+                </div>
+                <div class="detail-item diary-item"><h4>✨ ما يميزه</h4><ul><li>مستوحى من لقاءات مع نخبة العظماء في البودكاست</li><li>قوانين سلوكية عميقة (مثل: لا تحارب عادة بل استبدلها)</li><li>فلسفة "الانحراف بدرجة واحدة" وتأثيرها</li><li>أسلوب قصصي ملهم من واقع تجارب الكاتب</li></ul></div>
+                <div class="detail-item diary-item"><h4>🧩 الموضوعات الهامة</h4><ul><li>املأ دلاءك الخمسة بالترتيب (معرفة ← مهارات ← علاقات ← موارد ← سمعة)</li><li>قوة السؤال بدل الأمر</li><li>الغرابة والسخافة كعلامة فارقة</li><li>لا تتنازل عن قصتك الذاتية أبدًا</li><li>فلسفة كايزن العكسي (تراكم الإهمال)</li></ul></div>
+            </div>
+            <p style="text-align:center; margin-top:1.5rem; color:#64748b; font-size:0.9rem;">📌 أكثر من مليون نسخة مباعة · الأسرع مبيعًا في بريطانيا</p>
+        </div>
+    </div>
+
+    <script>
+        // ===== فتح وإغلاق المودال =====
+        function openModal(type) {
+            if (type === 'hbr') document.getElementById('modalHbr').classList.add('active');
+            else if (type === 'diary') document.getElementById('modalDiary').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        document.querySelectorAll('.modal-overlay').forEach(overlay => {
+            overlay.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        });
+
+        // ===== فتح/إغلاق المقارنة =====
+        function toggleCompare() {
+            const wrapper = document.getElementById('compareWrapper');
+            wrapper.classList.toggle('active');
+            if (wrapper.classList.contains('active')) {
+                setCompareTopic('leadership');
+                document.querySelectorAll('.compare-tab').forEach(t => t.classList.remove('active-tab'));
+                document.querySelector('.compare-tab[data-topic="leadership"]').classList.add('active-tab');
+                setTimeout(() => { wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 150);
+            }
+        }
+
+        // ===== بيانات المقارنة =====
+        const compareData = {
+            leadership: {
+                hbr: `<strong>الخلاصة الموسعة:</strong> القيادة في هذا الكتاب تُعالج كـ <strong>منصب ومهارة مكتسبة</strong> عبر خطوات منهجية. يبدأ ببناء عقلية القائد من خلال فهم الفرق بين الإدارة والقيادة، ثم ينتقل إلى تعزيز الذكاء العاطفي كأداة أساسية للتأثير. يركز على القيادة بالقدوة، وإدارة الاجتماعات، واتخاذ القرارات بناءً على البيانات.
+                        <ul><li><strong>خطوات عملية:</strong> كيفية بناء المصداقية في أول 90 يومًا.</li><li><strong>التواصل الرسمي:</strong> إتقان العروض التقديمية والمراسلات.</li><li><strong>إدارة النزاعات:</strong> تقنيات الحيادية والوساطة بين الأفراد.</li></ul>
+                        <div class="unique-badge">🏆 التميز: المنهجية الأكاديمية المدعومة بأبحاث هارفارد وخبراء مثل جولمان وكوتر.</div>`,
+                diary: `<strong>الخلاصة الموسعة:</strong> القيادة في هذا الكتاب تنطلق من <strong>الداخل أولاً</strong>، حيث يرى بارتليت أن القائد الحقيقي هو من يبني قصة ذاتية قوية (القانون السابع). يعتمد على التأثير الشخصي بدلاً من السلطة الوظيفية، مستخدمًا أسلوب "السؤال بدل الأمر" لفرض الالتزام.
+                        <ul><li><strong>القانون السادس:</strong> اسأل، لا تخبر — الأسئلة تخلق تفكيرًا أعمق.</li><li><strong>القانون العاشر:</strong> السخيف وغير المفيد يعرفك أكثر من العملي.</li><li><strong>القيادة بالحضور:</strong> بناء الثقة عبر الصدق والضعف الإنساني.</li></ul>
+                        <div class="unique-badge">🏆 التميز: تحويل القيادة إلى فن نفسي وقصصي مستوحى من لقاءات حقيقية.</div>`
+            },
+            self: {
+                hbr: `<strong>الخلاصة الموسعة:</strong> إدارة الذات هنا تُعامل كـ <strong>نظام إنتاجي</strong>. يركز على الإنتاجية الشخصية، إدارة الوقت، تحديد الأهداف المهنية، والتعامل مع الإجهاد. يعلمك كيفية تلقي الملاحظات لتحسين أدائك وتحقيق التوازن بين العمل والحياة.
+                        <ul><li><strong>إدارة الوقت:</strong> تقنيات تحديد الأولويات.</li><li><strong>التطوير الذاتي:</strong> البحث عن فرص داخل المؤسسة.</li><li><strong>التغذية الراجعة:</strong> كيفية الاستفادة من النقد البناء.</li></ul>
+                        <div class="unique-badge">🏆 التميز: إطار رسمي للتطوير المهني مرتبط بهيكل المؤسسة.</div>`,
+                diary: `<strong>الخلاصة الموسعة:</strong> ينظر بارتليت لإدارة الذات على أنها <strong>بناء المعبد الداخلي</strong>. يقدم نظرية "الدلاء الخمسة" (المعرفة ← المهارات ← الشبكة ← الموارد ← السمعة) بترتيب صارم، وقانون تغيير العادات (القانون الثامن).
+                        <ul><li><strong>القانون الأول:</strong> املأ دلاءك بالترتيب.</li><li><strong>القانون الثامن:</strong> استبدال العادة بمكافأة جديدة.</li><li><strong>المرونة النفسية:</strong> بناء هوية قوية لا تهزها النكسات.</li></ul>
+                        <div class="unique-badge">🏆 التميز: مزج بين الفلسفة السلوكية وعلم النفس الحديث مع أمثلة من رحلة الكاتب.</div>`
+            },
+            team: {
+                hbr: `<strong>الخلاصة الموسعة:</strong> بناء الفريق يُدار بـ <strong>هندسة تنظيمية</strong>. يقدم خطوات التفويض بثقة، وتقديم ملاحظات صعبة، وتطوير المواهب عبر خطط فردية. يركز على إدارة الفرق متعددة الثقافات وحل النزاعات رسميًا.
+                        <ul><li><strong>التفويض:</strong> خطة من 5 خطوات لتفويض المهام.</li><li><strong>مراجعات الأداء:</strong> نماذج جاهزة للتقييم السنوي.</li><li><strong>التنوع:</strong> استراتيجيات لإدارة الفرق المختلطة.</li></ul>
+                        <div class="unique-badge">🏆 التميز: أدوات إدارية جاهزة للطباعة مع تركيز على الجانب الموضوعي.</div>`,
+                diary: `<strong>الخلاصة الموسعة:</strong> يؤمن بارتليت أن أعظم الفرق تُبنى على <strong>ثقافة المتمردين</strong>. لا يريد فريقًا من المطيعين، بل فريقًا يتحدى الوضع الراهن. يركز على التوظيف بناءً على القيم المشتركة والقدرة على الصراحة.
+                        <ul><li><strong>القانون 28-33:</strong> بناء ثقافة حيث يُسمح بالفشل.</li><li><strong>التوظيف:</strong> اختر المواهب التي تكمل نقاط ضعفك.</li><li><strong>الاحتفاظ:</strong> خلق بيئة من الانتماء والهدف المشترك.</li></ul>
+                        <div class="unique-badge">🏆 التميز: نظرية الفريق كـ"عائلة روحية" حيث الاختلاف هو مصدر القوة.</div>`
+            },
+            strategy: {
+                hbr: `<strong>الخلاصة الموسعة:</strong> الاستراتيجية هنا تُعامل كـ <strong>علم مالي وإداري</strong>. يقدم كيفية قراءة البيانات المالية (الميزانية، قائمة الدخل، التدفقات النقدية)، وتطوير خطة عمل (Business Case) بمبررات قابلة للقياس.
+                        <ul><li><strong>الأدوات المالية:</strong> فهم نسب الربحية والسيولة.</li><li><strong>خطة العمل:</strong> هيكل جاهز لبناء مبرر مشروع.</li><li><strong>التحليل التنافسي:</strong> أدوات مثل القوى الخمس لبورتر.</li></ul>
+                        <div class="unique-badge">🏆 التميز: يزود المدير بلغة المحللين الماليين وخبراء الاستراتيجية.</div>`,
+                diary: `<strong>الخلاصة الموسعة:</strong> الاستراتيجية في كتاب بارتليت هي <strong>فن التميز والاختلاف</strong>. يرى أن القوة الدائمة هي في السرد القصصي والعلامة التجارية. يعلمك قانون "السخيف وغير المفيد" كأداة لجذب الانتباه.
+                        <ul><li><strong>القانون العاشر:</strong> استخدم الغرابة لخلق علامة فارقة.</li><li><strong>القصة:</strong> بناء سردية عاطفية حول منتجك.</li><li><strong>التسويق الفيروسي:</strong> اجعل العملاء يتحدثون عنك.</li></ul>
+                        <div class="unique-badge">🏆 التميز: رؤية مضادة للاستراتيجيات التقليدية تركز على العامل البشري.</div>`
+            },
+            failure: {
+                hbr: `<strong>الخلاصة الموسعة:</strong> الفشل يُدار عبر <strong>منهجية التحليل والتقويم</strong>. يشجع على مراجعات الأداء الدورية، وتحليل الأسباب الجذرية، وتطوير خطط تحسينية ملموسة.
+                        <ul><li><strong>التحليل:</strong> جلسات استخلاص الدروس (After Action Reviews).</li><li><strong>التواصل:</strong> كيفية إبلاغ الإخفاق للفريق بصدق.</li><li><strong>التحسين:</strong> خطط عمل لمنع تكرار الأخطاء.</li></ul>
+                        <div class="unique-badge">🏆 التميز: إطار مؤسسي محايد يحول الفشل إلى نقطة تعلم منظمة.</div>`,
+                diary: `<strong>الخلاصة الموسعة:</strong> ينظر بارتليت للفشل كـ <strong>وقود للقصة الذاتية</strong>. يقدم قانون "الانحراف بدرجة واحدة" محذرًا من تراكم الأخطاء الصغيرة (كايزن العكسي). يشجع على تقبل الفشل كفرصة لإعادة اختراع الذات.
+                        <ul><li><strong>القانون العشرون:</strong> خطأ صغير اليوم يصبح كارثة غدًا.</li><li><strong>المرونة:</strong> استخدم الفشل لإعادة كتابة هويتك.</li><li><strong>التعلم:</strong> كل نكسة تحمل درسًا عن حدودك الحقيقية.</li></ul>
+                        <div class="unique-badge">🏆 التميز: فلسفة وجودية تحول الفشل من عدو إلى جزء من الملحمة الشخصية.</div>`
+            },
+            full_lists: {
+                hbr: `<strong>📋 القائمة الكاملة لمهارات القيادة الـ 17</strong><div class="list-grid-compare">
+                        <div class="item">1. الانتقال إلى القيادة</div><div class="item">2. بناء الثقة والمصداقية</div>
+                        <div class="item">3. تطوير الذكاء العاطفي</div><div class="item">4. تحديد موقع النجاح</div>
+                        <div class="item">5. أن تصبح شخصًا مؤثرًا</div><div class="item">6. التواصل الفعال</div>
+                        <div class="item">7. الإنتاجية الشخصية</div><div class="item">8. التطوير الذاتي</div>
+                        <div class="item">9. التفويض بثقة</div><div class="item">10. تقديم ملاحظات فعّالة</div>
+                        <div class="item">11. تطوير المواهب</div><div class="item">12. قيادة الفرق</div>
+                        <div class="item">13. تعزيز الإبداع</div><div class="item">14. توظيف المواهب والاحتفاظ بها</div>
+                        <div class="item">15. مقدمة في الاستراتيجية</div><div class="item">16. إتقان الأدوات المالية</div>
+                        <div class="item">17. تطوير خطة عمل</div>
+                    </div>
+                    <div style="margin-top:1rem; background:rgba(129,140,248,0.05); padding:0.8rem; border-radius:1rem; border-right:2px solid #818cf8;">
+                        <strong style="color:#a5b4fc;">📌 ملخص التفرد:</strong> مهارات قابلة للقياس والتقييم، مدعومة بأبحاث أكاديمية، تغطي المدير من اليوم الأول حتى غرفة الاجتماعات.
+                    </div>`,
+                diary: `<strong>📋 القائمة الكاملة لقوانين الأعمال والحياة الـ 33</strong>
+                    <div style="margin-bottom:0.5rem; color:#fcd34d; font-weight:700;">🧘 الذات (1-9)</div>
+                    <div class="list-grid-compare">
+                        <div class="item">1. املأ دلاءك الخمسة بالترتيب</div><div class="item">2. لتتقن مهارة، علّمها</div>
+                        <div class="item">3. اسأل، لا تخبر</div><div class="item">4. لا تتنازل عن قصتك الذاتية</div>
+                        <div class="item">5. لا تحارب عادة، استبدلها</div><div class="item">6. الالتزام العام يولد العبقرية</div>
+                        <div class="item">7. السؤال يفرض التزامًا</div><div class="item">8. لكل فعل رد فعل معاكس</div>
+                        <div class="item">9. ابحث عن الصوت الذي يغير مسارك</div>
+                    </div>
+                    <div style="margin-bottom:0.5rem; color:#fcd34d; font-weight:700; margin-top:0.8rem;">📖 القصة (10-18)</div>
+                    <div class="list-grid-compare">
+                        <div class="item">10. السخيف وغير المفيد يعرّفانك</div><div class="item">11. تجنب ورق الحائط</div>
+                        <div class="item">12. وازن بين المألوف والجديد</div><div class="item">13. السرد القصصي هو السلاح</div>
+                        <div class="item">14. اجعل الجمهور بطل القصة</div><div class="item">15. الصدق والضعف يبنيان الجسور</div>
+                        <div class="item">16. التكرار يبني التذكر</div><div class="item">17. الاختلاف يبقى في العقول</div>
+                        <div class="item">18. كل علامة تحتاج لـ"لمسة جنون"</div>
+                    </div>
+                    <div style="margin-bottom:0.5rem; color:#fcd34d; font-weight:700; margin-top:0.8rem;">🧠 الفلسفة (19-27)</div>
+                    <div class="list-grid-compare">
+                        <div class="item">19. الخوف قرار وليس رد فعل</div><div class="item">20. خطأ صغير = كارثة غدًا</div>
+                        <div class="item">21. كايزن العكسي (تراكم الإهمال)</div><div class="item">22. النجاح حلزوني وليس خطيًا</div>
+                        <div class="item">23. المعاناة جزء من الترقية</div><div class="item">24. المنطق يخسر أمام العاطفة</div>
+                        <div class="item">25. التوقع أصل خيبة الأمل</div><div class="item">26. المرونة تُبنى بالفشل</div>
+                        <div class="item">27. الحظ = التحضير + الفرصة</div>
+                    </div>
+                    <div style="margin-bottom:0.5rem; color:#fcd34d; font-weight:700; margin-top:0.8rem;">🤝 الفريق (28-33)</div>
+                    <div class="list-grid-compare">
+                        <div class="item">28. الثقافة هي الأساس</div><div class="item">29. وظف المتمردين لا المطيعين</div>
+                        <div class="item">30. الفصل حماية للثقافة</div><div class="item">31. الترقية تعكس القيم</div>
+                        <div class="item">32. ابنِ بيئة الانتماء</div><div class="item">33. القائد خادم الفريق أولاً</div>
+                    </div>
+                    <div style="margin-top:1rem; background:rgba(251,191,36,0.05); padding:0.8rem; border-radius:1rem; border-right:2px solid #fbbf24;">
+                        <strong style="color:#fcd34d;">📌 ملخص التفرد:</strong> قوانين نفسية وسلوكية خالدة، مستوحاة من علم النفس وتجارب واقعية، تغطي الذات، القصة، الفلسفة، والفريق.
+                    </div>`
+            }
+        };
+
+        // ===== تغيير محتوى المقارنة =====
+        function setCompareTopic(topic) {
+            const hbrDiv = document.getElementById('hbrContent');
+            const diaryDiv = document.getElementById('diaryContent');
+            if (compareData[topic]) {
+                hbrDiv.innerHTML = compareData[topic].hbr;
+                diaryDiv.innerHTML = compareData[topic].diary;
+            }
+        }
+
+        // ===== مستمعات أزرار التاب =====
+        document.querySelectorAll('.compare-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.compare-tab').forEach(t => t.classList.remove('active-tab'));
+                this.classList.add('active-tab');
+                setCompareTopic(this.dataset.topic);
+            });
+        });
+
+        // تعيين المحور الافتراضي
+        setCompareTopic('leadership');
+    </script>
+
+</body>
+</html>
